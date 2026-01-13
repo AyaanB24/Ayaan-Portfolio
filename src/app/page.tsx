@@ -1,26 +1,17 @@
 "use client";
 
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Github,
-  Linkedin,
   Award,
-  ChevronRight,
-  Zap,
-  Cpu,
-  Globe,
   Terminal,
   ArrowRight
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import FloatingResume from "@/components/FloatingResume";
+import Image from "next/image";
 
-const fadeIn = (direction: "left" | "right"): any => ({
-  initial: { opacity: 0, x: direction === "left" ? -50 : 50, filter: "blur(10px)" },
-  whileInView: { opacity: 1, x: 0, filter: "blur(0px)" },
-  viewport: { once: true },
-  transition: { duration: 1, ease: "easeOut" }
-});
+
 
 export default function Home() {
   const [time, setTime] = useState("");
@@ -515,7 +506,7 @@ function SkillCategory({ title, skills, subtle = false }: { title: string, skill
               }}
               className="group/skill flex items-center gap-2 px-3 py-1.5 border border-black/5 rounded-full bg-zinc-50 transition-colors"
             >
-              {icon && <img src={icon} alt={s} className="w-4 h-4 grayscale group-hover/skill:grayscale-0 transition-all duration-300" />}
+              {icon && <Image src={icon} alt={s} width={16} height={16} className="w-4 h-4 grayscale group-hover/skill:grayscale-0 transition-all duration-300" />}
               <span className="text-[10px] font-mono font-black text-black/60 group-hover/skill:text-black uppercase tracking-tight">{s}</span>
             </motion.div>
           );
@@ -525,7 +516,16 @@ function SkillCategory({ title, skills, subtle = false }: { title: string, skill
   );
 }
 
-function ProjectCard({ number, title, desc, tag, github, demo }: any) {
+interface ProjectCardProps {
+  number: string;
+  title: string;
+  desc: string;
+  tag: string;
+  github?: string;
+  demo?: string;
+}
+
+function ProjectCard({ number, title, desc, tag, github, demo }: ProjectCardProps) {
   return (
     <div className="group relative p-10 border-2 border-black/10 bg-white/50 backdrop-blur-sm hover:border-emerald-500 hover:bg-emerald-50/10 hover:shadow-[20px_20px_60px_rgba(16,185,129,0.05)] transition-all duration-500 overflow-hidden rounded-3xl h-full flex flex-col justify-between">
       <div className="absolute top-0 right-0 p-8">
@@ -599,11 +599,19 @@ function TimelineItem({ title, company, period, points, certificateUrl }: { titl
   );
 }
 
-function EduCard({ number, school, location, level, period }: any) {
+interface EduCardProps {
+  number: string;
+  school: string;
+  location: string;
+  level: string;
+  period: string;
+}
+
+function EduCard({ number, school, location, level, period }: EduCardProps) {
   return (
     <div className="group relative p-10 border-2 border-black/10 bg-white hover:border-black hover:bg-black hover:text-white hover:shadow-[15px_15px_0_0_rgba(0,0,0,1)] transition-all duration-500 rounded-2xl flex flex-col justify-between h-full cursor-default">
       <div className="flex justify-between items-start mb-12">
-        <span className="font-mono text-xs text-zinc-300 group-hover:text-white/50 font-black tracking-widest">{number} // FOUNDATION</span>
+        <span className="font-mono text-xs text-zinc-300 group-hover:text-white/50 font-black tracking-widest">{number} {"// FOUNDATION"}</span>
         <div className="w-10 h-px bg-zinc-100 group-hover:bg-white/20 mt-2" />
       </div>
 
@@ -629,12 +637,22 @@ function EduCard({ number, school, location, level, period }: any) {
   );
 }
 
-function ContactCol({ title, links }: any) {
+interface LinkItem {
+  label: string;
+  href: string;
+}
+
+interface ContactColProps {
+  title: string;
+  links: LinkItem[];
+}
+
+function ContactCol({ title, links }: ContactColProps) {
   return (
     <div className="flex flex-col gap-6 items-center md:items-start text-center md:text-left">
       <span className="font-mono text-[10px] font-black text-black border-b border-black pb-2 tracking-[0.5em] uppercase">{title}</span>
       <div className="flex flex-col gap-2 items-center md:items-start">
-        {links.map((link: any, i: number) => (
+        {links.map((link, i) => (
           <a key={i} href={link.href} className="text-base md:text-lg font-bold text-black hover:italic transition-all uppercase tracking-tight">
             {link.label}
           </a>

@@ -18,7 +18,7 @@ const AVATARS = [
 // Content is Left, so Avatar is Right: 30%
 // Content is Right, so Avatar is Left: -30%
 // 25% (Hero) -> -35% (About) -> 45% (Skills - Far Right) -> -35% (Projects) ...
-const SECTION_X_POSITIONS = ["25%", "-35%", "45%", "-35%", "35%", "-35%", "35%", "-40%"];
+
 
 export default function Avatar() {
     const { scrollYProgress } = useScroll();
